@@ -75,9 +75,6 @@ class Helper {
 							return(false);
 						};
 
-						[link]
-						%slink%s
-
 					const user = {};
 					user.image = item.children[0].querySelector('img').src;
 					const name = item.querySelector('.uiProfileBlockContent').children[0].children[1].children[0].querySelector('a');
