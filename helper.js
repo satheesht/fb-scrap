@@ -49,6 +49,12 @@ class Helper {
 
 		await this.page.waitForNavigation();
 
+		if(this.page.url().includes('login_attempt')) {
+			Helper.printProgress('--> !! Login failed !!');
+
+			process.exit();
+		}
+
 		Helper.printProgress('--> Logged in');
 	};
 
@@ -115,13 +121,14 @@ class Helper {
 	async autoScroll() {
 		await this.page.evaluate(async () => {
 			await new Promise((resolve, reject) => {
+				let scrollCount = 0;
 				let totalHeight = 0;
 				let distance = 100;
 				let timer = setInterval(() => {
 					let scrollHeight = document.body.scrollHeight;
 					window.scrollBy(0, distance);
 					totalHeight += distance;
-
+					console.log(++scrollCount);
 					if(totalHeight >= scrollHeight){
 						clearInterval(timer);
 						resolve();
