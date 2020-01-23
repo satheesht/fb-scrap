@@ -2,7 +2,7 @@ const pp = require('puppeteer');
 const fs = require('fs');
 
 const ppConfig = {
-	headless: true,
+	headless: false,
 	devtools: true,
 	slowMo: 10 // slow down by 250ms
 };
@@ -17,6 +17,9 @@ const credential = {
 
 (async () => {
 	const browser = await pp.launch(ppConfig);
+	const context = browser.defaultBrowserContext();
+	context.overridePermissions("https://www.facebook.com", ["geolocation", "notifications"]);
+
 	const page = await browser.newPage();
 
 	const h = require('./helper')({ page });
