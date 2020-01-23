@@ -7,6 +7,8 @@ class Helper {
 		await this.page.goto('https://www.facebook.com/groups/481251052025898/members/', {
 			waitUntil: 'networkidle2'
 		});
+
+		Helper.printProgress('--> Member opened');
 	};
 
 	async openFacebook() {
@@ -15,6 +17,7 @@ class Helper {
 			waitUntil: 'networkidle2'
 		});
 
+		Helper.printProgress('--> Facebook opened');
 		return this;
 	};
 
@@ -45,10 +48,13 @@ class Helper {
 		}
 
 		await this.page.waitForNavigation();
+
+		Helper.printProgress('--> Logged in');
 	};
 
 	async getMemberList() {
 
+		Helper.printProgress('--> Infinite scroll starts');
 		await this.autoScroll();
 
 		return await this.page.evaluate(
@@ -135,6 +141,12 @@ class Helper {
 
 	async isThere(selector) {
 		return await this.page.$(selector) !== null
+	}
+
+	static printProgress(text) {
+		process.stdout.clearLine();
+		process.stdout.cursorTo(0);
+		process.stdout.write(text);
 	}
 }
 
